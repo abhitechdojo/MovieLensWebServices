@@ -4,9 +4,11 @@
 
 ## Directory-based project format:
 .idea/
-target/*
-project/target/*
+target/**
+project/target/**
 **/*.jar
+**/*.class
+**/*.cache
 
 # if you remove the above rule, at least ignore the following:
 
