@@ -1,7 +1,5 @@
 package models
 
-import javassist.runtime.Desc
-
 import com.websudos.phantom.dsl._
 import com.websudos.phantom.CassandraTable
 import connector.CassandraConnector
@@ -39,6 +37,10 @@ object Movies extends Movies with CassandraConnector {
       .future()
   }
 
+  def getAll() : Future[Seq[Movie]] = {
+    select.fetch()
+  }
+
   def getById(id: Int) : Future[Option[Movie]] = {
     select.where(_.id eqs id).one()
   }
@@ -53,9 +55,10 @@ object Movies extends Movies with CassandraConnector {
     criteria.allowFiltering().fetch()
   }
 
-  def getByGenreAndYear(genre: List[String], year: Int) : Future[Seq[Movie]] = {
+  def getByGenreAndYear(genre: List[String], year: List[Int]) : Future[Seq[Movie]] = {
     var criteria = select.where(_.genre contains genre.head)
-    criteria = genre.tail.foldLeft(criteria){(accum, i) => accum.and(_.genre contains i)}.and(_.year eqs year)
+    criteria = genre.tail.foldLeft(criteria){(accum, i) => accum.and(_.genre contains i)}
+    criteria = year.tail.foldLeft(criteria){(accum, i) => accum.and(_.year eqs i)}
     println(s"${criteria.queryString}")
     criteria.allowFiltering().fetch()
   }

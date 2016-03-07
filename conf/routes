@@ -6,6 +6,7 @@
 GET     /movies/genre                     controllers.MoviesController.getByGenre(genre: List[String])
 GET     /movies/year/:year                controllers.MoviesController.getByYear(year: Int)
 GET     /movies/id/:id                    controllers.MoviesController.getById(id: Int)
-GET     /movies/yeargenre                 controllers.MoviesController.getByGenreAndYear(genre: List[String], year: Int)
-
+GET     /movies/yeargenre                 controllers.MoviesController.getByGenreAndYear(genre: List[String], year: List[Int])
+GET     /movies/genrelist                 controllers.MoviesController.getGenreList()
+GET     /movies/yearlist                  controllers.MoviesController.getYearList()
 # Map static resources from the /public folder to the /assets URL path
